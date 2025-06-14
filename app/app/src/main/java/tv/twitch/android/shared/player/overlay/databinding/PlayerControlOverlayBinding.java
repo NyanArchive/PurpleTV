@@ -5,13 +5,12 @@ import android.widget.ImageView;
 
 import androidx.compose.ui.platform.ComposeView;
 import androidx.constraintlayout.widget.ConstraintLayout;
-import androidx.viewbinding.ViewBinding;
 
 import tv.purple.monolith.features.chapters.bridge.ChaptersHook;
 import tv.purple.monolith.features.timer.bridge.TimerHook;
 import tv.purple.monolith.models.exception.VirtualImpl;
 
-public class PlayerControlOverlayBinding implements ViewBinding {
+public class PlayerControlOverlayBinding {
     public final ImageView shareButton = null;
     public final ImageView createClipButton = null;
     public final ComposeView createClipTextButton = null;

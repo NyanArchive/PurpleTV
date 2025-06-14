@@ -1,39 +1,8 @@
-import com.android.build.gradle.internal.tasks.factory.dependsOn
-
 plugins {
     id("com.android.application")
     id("kotlin-android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
-}
-
-tasks.register("genDex") {
-    delete("${project.rootDir}/monolith/build/")
-    dependsOn(":app:mergeDexRelease")
-    doLast {
-        val dexDir = file("${project.rootDir}/monolith/build/.transforms")
-        println("[monolith] Looking for dex files in: ${dexDir.absolutePath}")
-        println("[monolith] Directory exists: ${dexDir.exists()}")
-        if (dexDir.exists()) {
-            val dexFiles = dexDir.walk()
-                .filter { it.isFile && it.name.endsWith(".dex") }
-                .toList()
-            
-            if (dexFiles.isNotEmpty()) {
-                println("[monolith] Found dex file: ${dexFiles[0].name}")
-                copy {
-                    from(dexFiles[0])
-                    into("${project.rootDir}/dex/")
-                    rename { "app.dex" }
-                }
-                println("[monolith] Dex file has been copied successfully!")
-            } else {
-                println("[monolith] No dex files found in ${dexDir.absolutePath} or its subdirectories")
-            }
-        } else {
-            println("[monolith] Transforms directory not found at ${dexDir.absolutePath}")
-        }
-    }
 }
 
 android {
@@ -52,12 +21,37 @@ android {
         jvmTarget = Config.jvmTarget
     }
 
-    buildFeatures {
-        dataBinding = true
-    }
-
     sourceSets.named("main") {
         java.filter.exclude("**/*")
+    }
+}
+
+tasks.register("genDex") {
+    delete("${project.rootDir}/monolith/build/")
+    dependsOn(":app:mergeDexRelease")
+    doLast {
+        val dexDir = file("${project.rootDir}/monolith/build/.transforms")
+        println("[monolith] Looking for dex files in: ${dexDir.absolutePath}")
+        println("[monolith] Directory exists: ${dexDir.exists()}")
+        if (dexDir.exists()) {
+            val dexFiles = dexDir.walk()
+                .filter { it.isFile && it.name.endsWith(".dex") }
+                .toList()
+
+            if (dexFiles.isNotEmpty()) {
+                println("[monolith] Found dex file: ${dexFiles[0].name}")
+                copy {
+                    from(dexFiles[0])
+                    into("${project.rootDir}/dex/")
+                    rename { "app.dex" }
+                }
+                println("[monolith] Dex file has been copied successfully!")
+            } else {
+                println("[monolith] No dex files found in ${dexDir.absolutePath} or its subdirectories")
+            }
+        } else {
+            println("[monolith] Transforms directory not found at ${dexDir.absolutePath}")
+        }
     }
 }
 

@@ -6,11 +6,3 @@ plugins {
 tasks.register("clean", Delete::class.java) {
     delete(layout.buildDirectory)
 }
-
-buildscript {
-    repositories {
-        maven {
-            setUrl("https://jitpack.io")
-        }
-    }
-}

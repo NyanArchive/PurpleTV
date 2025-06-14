@@ -1,10 +1,8 @@
 package tv.purple.monolith.bridge.di;
 
-import android.app.Application
 import android.content.Context
 import dagger.BindsInstance
 import dagger.Component
-import dagger.Provides
 import dagger.hilt.internal.GeneratedComponent
 import tv.purple.monolith.component.api.di.module.ApiModule
 import tv.purple.monolith.core.LifecycleCore
@@ -18,7 +16,6 @@ import tv.purple.monolith.features.tracking.Tracker
 import tv.purple.monolith.features.ui.UI
 import tv.purple.monolith.features.updater.Updater
 import tv.purple.monolith.features.vodhunter.VodHunter
-import tv.twitch.android.app.core.ApplicationContext
 import tv.twitch.android.core.user.TwitchAccountManager
 import javax.inject.Singleton
 
